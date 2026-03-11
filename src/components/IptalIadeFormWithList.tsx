@@ -227,7 +227,7 @@ export default function IptalIadeFormWithList() {
 
           <div className="flex flex-col gap-1.5">
             <label htmlFor="orderNumber" className="text-sm font-medium text-slate-800">
-              Sipariş Numarası
+              İade Talebi Numarası
             </label>
             <select
               id="orderNumber"
