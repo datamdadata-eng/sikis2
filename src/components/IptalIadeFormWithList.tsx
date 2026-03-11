@@ -65,6 +65,7 @@ export default function IptalIadeFormWithList() {
   const [sorguLoading, setSorguLoading] = useState(false);
   const [sorguError, setSorguError] = useState<string | null>(null);
   const [now, setNow] = useState(() => Date.now());
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 
   useEffect(() => {
     if (!sorguSonuc || sorguSonuc.length === 0) return;
@@ -111,6 +112,8 @@ export default function IptalIadeFormWithList() {
         setSubmitError(data.error || "Kayıt gönderilemedi.");
         return;
       }
+      setShowSuccessPopup(true);
+      setTimeout(() => setShowSuccessPopup(false), 4000);
     } catch {
       setSubmitError("Bağlantı hatası. Lütfen tekrar deneyin.");
     }
@@ -454,6 +457,41 @@ export default function IptalIadeFormWithList() {
           </div>
         )}
       </section>
+
+      {showSuccessPopup && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4"
+          onClick={() => setShowSuccessPopup(false)}
+          role="dialog"
+          aria-live="polite"
+          aria-label="Talep gönderildi"
+        >
+          <div className="absolute inset-0 bg-black/50" aria-hidden="true" />
+          <div
+            className="relative rounded-2xl bg-white p-6 shadow-xl ring-1 ring-slate-200 sm:p-8"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex flex-col items-center gap-4 text-center">
+              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-emerald-100">
+                <svg className="h-6 w-6 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold text-slate-900">Talebiniz gönderildi</h3>
+                <p className="mt-1 text-sm text-slate-600">İşleminiz alınmıştır. TC Kimlik No. ile sorgulayarak takip edebilirsiniz.</p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowSuccessPopup(false)}
+                className="rounded-full bg-[#004f9f] px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-[#003c79]"
+              >
+                Tamam
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
