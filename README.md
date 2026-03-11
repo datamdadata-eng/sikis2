@@ -1,36 +1,51 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# İptal ve İade Talep Formu
 
-## Getting Started
+Next.js ile geliştirilmiş, BDDK tarzı arayüze sahip iptal ve iade talep formu uygulaması.
 
-First, run the development server:
+## Özellikler
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **Talep formu:** TC Kimlik No., ad soyad, e-posta, sipariş no., tutar, para birimi, referans/İBAN, iade bankası, açıklama
+- **Sorgula:** TC ile işlem durumlarını sorgulama; 60 dakikalık iade geri sayımı
+- **Admin paneli:** `/admin` — Talepleri listeleme ve düzenleme (şifre ile giriş)
+- **Veritabanı:** PostgreSQL (Neon); tablo ilk kayıtta otomatik oluşturulur
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Kurulum
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Bağımlılıkları yükleyin:
+   ```bash
+   npm install
+   ```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+2. `.env.local` dosyası oluşturup aşağıdaki değişkenleri tanımlayın:
+   ```env
+   DATABASE_URL=postgresql://...
+   ADMIN_PASSWORD=admin_paneli_sifreniz
+   ```
 
-## Learn More
+3. Geliştirme sunucusunu başlatın:
+   ```bash
+   npm run dev
+   ```
 
-To learn more about Next.js, take a look at the following resources:
+4. Tarayıcıda [http://localhost:3000](http://localhost:3000) adresine gidin.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Ortam Değişkenleri
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+| Değişken | Açıklama |
+|----------|----------|
+| `DATABASE_URL` | PostgreSQL bağlantı dizesi (Neon vb.) |
+| `ADMIN_PASSWORD` | Admin paneli giriş şifresi |
 
-## Deploy on Vercel
+`.env.local` dosyası Git’e eklenmez; deploy ortamında bu değişkenleri ayrıca tanımlayın.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Veritabanı
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Tablo yoksa ilk API çağrısında otomatik oluşturulur. Elle kurmak için `scripts/init-talepler.sql` dosyasını veritabanında çalıştırabilirsiniz. Ayrıntı için `VERITABANI.md` dosyasına bakın.
+
+## Teknolojiler
+
+- Next.js 16 (App Router)
+- React 19
+- TypeScript
+- Tailwind CSS
+- PostgreSQL (pg / Neon)
