@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "../components/Header";
+import Footer from "../components/Footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -35,10 +36,7 @@ export default function RootLayout({
               {children}
             </div>
           </main>
-          <footer className="border-t border-slate-200 bg-white py-6 text-center text-xs text-slate-500">
-            <p>© {new Date().getFullYear()} Tüm hakları saklıdır.</p>
-            <p className="mt-1">Bu site kurumsal iletişim ve talep yönetimi amacıyla hazırlanmıştır.</p>
-          </footer>
+          <Footer />
         </div>
       </body>
     </html>

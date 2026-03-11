@@ -9,7 +9,7 @@ export default function Header() {
       {/* Üst sütun: beyaz, sadece logo */}
       <div className="w-full bg-white px-4 py-4 md:px-6 md:py-5">
         <div className="mx-auto max-w-6xl">
-          <a href="/" className="inline-flex shrink-0 items-center">
+          <a href="https://www.bddk.org.tr/" target="_blank" rel="noopener noreferrer" className="inline-flex shrink-0 items-center">
             <Image
               src={BDDK_LOGO_URL}
               alt="BDDK — Bankacılık Düzenleme ve Denetleme Kurumu"
