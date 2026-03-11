@@ -66,6 +66,7 @@ export default function IptalIadeFormWithList() {
   const [sorguError, setSorguError] = useState<string | null>(null);
   const [now, setNow] = useState(() => Date.now());
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     if (!sorguSonuc || sorguSonuc.length === 0) return;
@@ -75,7 +76,9 @@ export default function IptalIadeFormWithList() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (isSubmitting) return;
     setSubmitError(null);
+    setIsSubmitting(true);
     const form = e.currentTarget;
     const formData = new FormData(form);
 
@@ -110,16 +113,18 @@ export default function IptalIadeFormWithList() {
       const data = await res.json().catch(() => ({}));
       if (!res.ok) {
         setSubmitError(data.error || "Kayıt gönderilemedi.");
+        setIsSubmitting(false);
         return;
       }
       setShowSuccessPopup(true);
       setTimeout(() => setShowSuccessPopup(false), 4000);
+      form.reset();
+      setFormKey((k) => k + 1);
     } catch {
       setSubmitError("Bağlantı hatası. Lütfen tekrar deneyin.");
+    } finally {
+      setIsSubmitting(false);
     }
-
-    form.reset();
-    setFormKey((k) => k + 1);
   };
 
   const handleSorgula = async () => {
@@ -346,9 +351,10 @@ export default function IptalIadeFormWithList() {
             </button>
             <button
               type="submit"
-              className="rounded-full bg-[#004f9f] px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-[#003c79] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#004f9f]"
+              disabled={isSubmitting}
+              className="rounded-full bg-[#004f9f] px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-[#003c79] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#004f9f] disabled:cursor-not-allowed disabled:opacity-70"
             >
-              Talep gönder
+              {isSubmitting ? "Gönderiliyor..." : "Talep gönder"}
             </button>
           </div>
         </form>
