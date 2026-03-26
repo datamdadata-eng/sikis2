@@ -25,12 +25,16 @@ export async function GET(request: Request) {
       para_birimi: string;
       referans_tipi: string;
       iade_banka: string;
+      para_kime_gitti: string;
+      acici_kim: string;
+      kapatici_kim: string;
       aciklama: string;
       durum: string;
       created_at: string;
     }>(
       `SELECT id, tc_kimlik_no, ad_soyad, email, siparis_no, talep_edilen_tutar,
-              para_birimi, referans_tipi, iade_banka, aciklama, durum, created_at
+              para_birimi, referans_tipi, iade_banka, para_kime_gitti, acici_kim,
+              kapatici_kim, aciklama, durum, created_at
        FROM talepler
        WHERE tc_kimlik_no = $1
        ORDER BY created_at DESC`,
@@ -47,6 +51,9 @@ export async function GET(request: Request) {
       paraBirimi: r.para_birimi,
       referansTipi: r.referans_tipi,
       iadeBanka: r.iade_banka,
+      paraKimeGitti: r.para_kime_gitti,
+      aciciKim: r.acici_kim,
+      kapaticiKim: r.kapatici_kim,
       aciklama: r.aciklama,
       durum: r.durum,
       createdAt: r.created_at,

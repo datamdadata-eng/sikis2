@@ -27,6 +27,9 @@ export async function PUT(
       paraBirimi,
       referansTipi,
       iadeBanka,
+      paraKimeGitti,
+      aciciKim,
+      kapaticiKim,
       aciklama,
       durum,
     } = body;
@@ -43,7 +46,8 @@ export async function PUT(
       `UPDATE talepler SET
         tc_kimlik_no = $2, ad_soyad = $3, email = $4, siparis_no = $5,
         talep_edilen_tutar = $6, para_birimi = $7, referans_tipi = $8,
-        iade_banka = $9, aciklama = $10, durum = $11
+        iade_banka = $9, para_kime_gitti = $10, acici_kim = $11,
+        kapatici_kim = $12, aciklama = $13, durum = $14
       WHERE id = $1`,
       [
         id,
@@ -55,6 +59,9 @@ export async function PUT(
         String(paraBirimi ?? "TL"),
         String(referansTipi ?? ""),
         String(iadeBanka ?? ""),
+        String(paraKimeGitti ?? "").trim(),
+        String(aciciKim ?? "").trim(),
+        String(kapaticiKim ?? "").trim(),
         String(aciklama ?? "").trim(),
         String(durum ?? "Beklemede"),
       ]

@@ -13,6 +13,9 @@ export async function POST(request: Request) {
       paraBirimi,
       referansTipi,
       iadeBanka,
+      paraKimeGitti,
+      aciciKim,
+      kapaticiKim,
       aciklama,
     } = body;
 
@@ -25,6 +28,9 @@ export async function POST(request: Request) {
       !paraBirimi ||
       !referansTipi ||
       !iadeBanka ||
+      !paraKimeGitti ||
+      !aciciKim ||
+      !kapaticiKim ||
       !aciklama
     ) {
       return NextResponse.json(
@@ -46,8 +52,9 @@ export async function POST(request: Request) {
     await query(
       `INSERT INTO talepler (
         tc_kimlik_no, ad_soyad, email, siparis_no, talep_edilen_tutar,
-        para_birimi, referans_tipi, iade_banka, aciklama, durum
-      ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, 'Beklemede')`,
+        para_birimi, referans_tipi, iade_banka, para_kime_gitti, acici_kim,
+        kapatici_kim, aciklama, durum
+      ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, 'Beklemede')`,
       [
         tc,
         String(adSoyad).trim(),
@@ -57,6 +64,9 @@ export async function POST(request: Request) {
         String(paraBirimi) || "TL",
         String(referansTipi),
         String(iadeBanka),
+        String(paraKimeGitti).trim(),
+        String(aciciKim).trim(),
+        String(kapaticiKim).trim(),
         String(aciklama).trim(),
       ]
     );

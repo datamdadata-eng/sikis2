@@ -13,6 +13,9 @@ type Talep = {
   para_birimi: string;
   referans_tipi: string;
   iade_banka: string;
+  para_kime_gitti: string;
+  acici_kim: string;
+  kapatici_kim: string;
   aciklama: string;
   durum: string;
   created_at: string;
@@ -138,6 +141,9 @@ export default function AdminPage() {
       paraBirimi: formData.get("paraBirimi"),
       referansTipi: formData.get("referansTipi"),
       iadeBanka: formData.get("iadeBanka"),
+      paraKimeGitti: formData.get("paraKimeGitti"),
+      aciciKim: formData.get("aciciKim"),
+      kapaticiKim: formData.get("kapaticiKim"),
       aciklama: formData.get("aciklama"),
       durum: formData.get("durum"),
     };
@@ -243,6 +249,9 @@ export default function AdminPage() {
                   <th className="px-3 py-3 font-semibold text-slate-800">Sipariş No.</th>
                   <th className="px-3 py-3 font-semibold text-slate-800">Tutar</th>
                   <th className="px-3 py-3 font-semibold text-slate-800">Banka</th>
+                  <th className="px-3 py-3 font-semibold text-slate-800">Para Kime Gitti?</th>
+                  <th className="px-3 py-3 font-semibold text-slate-800">Açıcı Kim?</th>
+                  <th className="px-3 py-3 font-semibold text-slate-800">Kapatıcı Kim?</th>
                   <th className="px-3 py-3 font-semibold text-slate-800">Durum</th>
                   <th className="px-3 py-3 font-semibold text-slate-800"></th>
                 </tr>
@@ -260,6 +269,9 @@ export default function AdminPage() {
                       {t.talep_edilen_tutar} {t.para_birimi}
                     </td>
                     <td className="px-3 py-3 text-slate-700">{t.iade_banka}</td>
+                    <td className="px-3 py-3 text-slate-700">{t.para_kime_gitti || "—"}</td>
+                    <td className="px-3 py-3 text-slate-700">{t.acici_kim || "—"}</td>
+                    <td className="px-3 py-3 text-slate-700">{t.kapatici_kim || "—"}</td>
                     <td className="px-3 py-3">
                       <span className="inline-flex rounded-full bg-amber-100 px-2.5 py-0.5 text-xs font-medium text-amber-800">
                         {t.durum}
@@ -375,6 +387,33 @@ export default function AdminPage() {
                     <option key={b} value={b}>{b}</option>
                   ))}
                 </select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-slate-800">Para Kime Gitti?</label>
+                <input
+                  name="paraKimeGitti"
+                  defaultValue={editTalep.para_kime_gitti}
+                  className="mt-1 w-full rounded-md border border-slate-200 px-3 py-2 text-sm"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-slate-800">Açıcı Kim?</label>
+                <input
+                  name="aciciKim"
+                  defaultValue={editTalep.acici_kim}
+                  className="mt-1 w-full rounded-md border border-slate-200 px-3 py-2 text-sm"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-slate-800">Kapatıcı Kim?</label>
+                <input
+                  name="kapaticiKim"
+                  defaultValue={editTalep.kapatici_kim}
+                  className="mt-1 w-full rounded-md border border-slate-200 px-3 py-2 text-sm"
+                  required
+                />
               </div>
               <div>
                 <label className="block text-sm font-medium text-slate-800">Durum</label>

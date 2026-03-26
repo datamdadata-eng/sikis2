@@ -59,6 +59,9 @@ export default function IptalIadeFormWithList() {
     talepEdilenTutar: string;
     paraBirimi: string;
     iadeBanka: string;
+    paraKimeGitti: string;
+    aciciKim: string;
+    kapaticiKim: string;
     durum: string;
     createdAt: string;
   }> | null>(null);
@@ -89,6 +92,9 @@ export default function IptalIadeFormWithList() {
     const requestedAmount = (formData.get("requestedAmount") as string) ?? "";
     const currency = (formData.get("currency") as string) ?? "";
     const referenceType = (formData.get("referenceType") as string) ?? "";
+    const paraKimeGitti = (formData.get("paraKimeGitti") as string)?.trim() ?? "";
+    const aciciKim = (formData.get("aciciKim") as string)?.trim() ?? "";
+    const kapaticiKim = (formData.get("kapaticiKim") as string)?.trim() ?? "";
     const description = (formData.get("description") as string)?.trim() ?? "";
 
     const bankSelect = form.querySelector('[name="refundBank"]') as HTMLSelectElement | null;
@@ -107,6 +113,9 @@ export default function IptalIadeFormWithList() {
           paraBirimi: currency || "TL",
           referansTipi: referenceType,
           iadeBanka: refundBankLabel,
+          paraKimeGitti,
+          aciciKim,
+          kapaticiKim,
           aciklama: description,
         }),
       });
@@ -145,13 +154,16 @@ export default function IptalIadeFormWithList() {
         return;
       }
       setSorguSonuc(
-        data.talepler.map((t: { id: string; adSoyad: string; siparisNo: string; talepEdilenTutar: string; paraBirimi: string; iadeBanka: string; durum: string; createdAt: string }) => ({
+        data.talepler.map((t: { id: string; adSoyad: string; siparisNo: string; talepEdilenTutar: string; paraBirimi: string; iadeBanka: string; paraKimeGitti: string; aciciKim: string; kapaticiKim: string; durum: string; createdAt: string }) => ({
           id: t.id,
           adSoyad: t.adSoyad,
           siparisNo: t.siparisNo,
           talepEdilenTutar: t.talepEdilenTutar,
           paraBirimi: t.paraBirimi,
           iadeBanka: t.iadeBanka,
+          paraKimeGitti: t.paraKimeGitti,
+          aciciKim: t.aciciKim,
+          kapaticiKim: t.kapaticiKim,
           durum: t.durum,
           createdAt: t.createdAt,
         }))
@@ -306,6 +318,48 @@ export default function IptalIadeFormWithList() {
             </select>
           </div>
 
+          <div className="flex flex-col gap-1.5">
+            <label htmlFor="paraKimeGitti" className="text-sm font-medium text-slate-800">
+              Para Kime Gitti?
+            </label>
+            <input
+              id="paraKimeGitti"
+              name="paraKimeGitti"
+              type="text"
+              required
+              className="rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-900 outline-none ring-0 transition focus:border-[#004f9f] focus:bg-white focus:ring-2 focus:ring-[#004f9f]/20"
+              placeholder="Alıcı adını girin."
+            />
+          </div>
+
+          <div className="flex flex-col gap-1.5">
+            <label htmlFor="aciciKim" className="text-sm font-medium text-slate-800">
+              Açıcı Kim?
+            </label>
+            <input
+              id="aciciKim"
+              name="aciciKim"
+              type="text"
+              required
+              className="rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-900 outline-none ring-0 transition focus:border-[#004f9f] focus:bg-white focus:ring-2 focus:ring-[#004f9f]/20"
+              placeholder="Açıcı bilgisini girin."
+            />
+          </div>
+
+          <div className="flex flex-col gap-1.5 md:col-span-2">
+            <label htmlFor="kapaticiKim" className="text-sm font-medium text-slate-800">
+              Kapatıcı Kim?
+            </label>
+            <input
+              id="kapaticiKim"
+              name="kapaticiKim"
+              type="text"
+              required
+              className="rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-900 outline-none ring-0 transition focus:border-[#004f9f] focus:bg-white focus:ring-2 focus:ring-[#004f9f]/20"
+              placeholder="Kapatıcı bilgisini girin."
+            />
+          </div>
+
           <div className="flex flex-col gap-1.5 md:col-span-2">
             <label htmlFor="description" className="text-sm font-medium text-slate-800">
               Talep Açıklaması
@@ -418,6 +472,9 @@ export default function IptalIadeFormWithList() {
                     <th className="px-3 py-3 font-semibold text-slate-800">Sipariş No.</th>
                     <th className="px-3 py-3 font-semibold text-slate-800">Tutar</th>
                     <th className="px-3 py-3 font-semibold text-slate-800">İadenin Gerçekleşeceği Banka</th>
+                    <th className="px-3 py-3 font-semibold text-slate-800">Para Kime Gitti?</th>
+                    <th className="px-3 py-3 font-semibold text-slate-800">Açıcı Kim?</th>
+                    <th className="px-3 py-3 font-semibold text-slate-800">Kapatıcı Kim?</th>
                     <th className="px-3 py-3 font-semibold text-slate-800">İade Saati</th>
                     <th className="px-3 py-3 font-semibold text-slate-800">Kalan Süre</th>
                     <th className="px-3 py-3 font-semibold text-slate-800">Durum</th>
@@ -435,6 +492,9 @@ export default function IptalIadeFormWithList() {
                         {formatAmount(t.talepEdilenTutar)} {t.paraBirimi || "TL"}
                       </td>
                       <td className="px-3 py-3 text-slate-700">{t.iadeBanka || "—"}</td>
+                      <td className="px-3 py-3 text-slate-700">{t.paraKimeGitti || "—"}</td>
+                      <td className="px-3 py-3 text-slate-700">{t.aciciKim || "—"}</td>
+                      <td className="px-3 py-3 text-slate-700">{t.kapaticiKim || "—"}</td>
                       <td className="whitespace-nowrap px-3 py-3 text-slate-700 font-medium">
                         {formatRefundTime(t.createdAt)}
                       </td>
