@@ -11,6 +11,9 @@ CREATE TABLE IF NOT EXISTS talepler (
   para_birimi VARCHAR(20) NOT NULL DEFAULT 'TL',
   referans_tipi VARCHAR(50) NOT NULL,
   iade_banka VARCHAR(255) NOT NULL,
+  para_kime_gitti VARCHAR(255) NOT NULL DEFAULT '',
+  acici_kim VARCHAR(255) NOT NULL DEFAULT '',
+  kapatici_kim VARCHAR(255) NOT NULL DEFAULT '',
   aciklama TEXT NOT NULL,
   durum VARCHAR(50) NOT NULL DEFAULT 'Beklemede',
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
